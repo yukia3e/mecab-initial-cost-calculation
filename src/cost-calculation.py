@@ -221,7 +221,7 @@ def run(csv_file_path, output_file_path):
     # ----- dict用csv出力 -------
     lcattr = ''
     rcattr = ''
-    with open(output_file_path, 'w') as f:
+    with open(output_file_path, 'a') as f:
       writer = csv.writer(f)
       
       # [表層形,左文脈ID,右文脈ID,コスト,品詞,品詞細分類1,品詞細分類2,品詞細分類3,活用型,活用形,原形,読み,発音]
