@@ -1,0 +1,24 @@
+# common ignore
+*.swp
+*.swo
+*.pyc
+*.zip
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor specific files #
+#################################
+.idea
+.project
+.buildpath
+.settings/
+.vscode/

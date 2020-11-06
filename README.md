@@ -1,0 +1,1 @@
+# mecab-initial-cost-calculation
