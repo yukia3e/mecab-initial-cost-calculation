@@ -4,6 +4,7 @@ import argparse
 import re
 
 # Average cost per char count by below command
+# https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/
 # cat Noun.*.csv | perl -nle 'use Encode;@a=split(/,/);($word,$l_id,$r_id,$cost)=@a[0,1,2,3];$len=length(Encode::decode(q{utf8},$word));$e=$rslt->[$len]||={};$e->{sum}+=$cost;$e->{n}++;$e->{max}=$cost if ($e->{max}<$cost);$e->{min}=$cost if (!defined($e->{min})or $cost<$e->{min});END{print "{"; for $len (0..$#$rslt){$e=$rslt->[$len]||{};print "	$len:".$e->{sum}/$e->{n}."," if $e->{n}}; print "}" }';
 AVG_COST_PER_NOUN_CHAR_COUNT = {
   1:8882.12813370473,
