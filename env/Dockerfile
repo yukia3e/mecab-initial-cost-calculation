@@ -1,3 +1,5 @@
+# IMAGE: yukia3/mecab-initial-cost-calculation
+
 FROM ubuntu:latest
 
 WORKDIR /root
