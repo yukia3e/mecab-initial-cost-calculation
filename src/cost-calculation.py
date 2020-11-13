@@ -269,6 +269,7 @@ if __name__ == "__main__":
       '-c',
       '--coefficient',
       help='係数（デフォルト 0.6）',
+      type=float,
       default=0.6
   )
   args = vars(parser.parse_args())
