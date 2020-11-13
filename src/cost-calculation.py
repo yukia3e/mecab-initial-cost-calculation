@@ -130,7 +130,7 @@ def normalize_surface(surface):
   return surface_normalized
 
 
-def run(csv_file_path, output_file_path, dict_path):
+def run(csv_file_path, output_file_path, dict_path, coefficient):
   rows = []
   with open(csv_file_path) as f:
     # reader = csv.reader(f, delimiter='\t')
@@ -211,7 +211,8 @@ def run(csv_file_path, output_file_path, dict_path):
     # 単体ワードとして分かち書きされるコストを算出
     # ref. http://blog.livedoor.jp/techblog/archives/65828235.html
     # best_word_cost = (real_acm_cost - partial_connection_cost - 1)
-    best_word_cost = (real_acm_cost - partial_connection_cost - 1) * 0.7
+    best_word_cost = (
+        real_acm_cost - partial_connection_cost - 1) * coefficient
 
     # ----- コスト評価（単語文字長からの平均コスト取得） -------
     if pos == '名詞':
@@ -264,7 +265,13 @@ if __name__ == "__main__":
       help='辞書パス（/usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd など）',
       default=''
   )
+  parser.add_argument(
+      '-c',
+      '--coefficient',
+      help='係数（デフォルト 0.6）',
+      default=0.6
+  )
   args = vars(parser.parse_args())
 
-  run(csv_file_path=args['csvFilePath'],
-      output_file_path=args['outputFilePath'], dict_path=args['dictPath'])
+  run(csv_file_path=args['csvFilePath'], output_file_path=args['outputFilePath'],
+      dict_path=args['dictPath'], coefficient=args['coefficient'])
