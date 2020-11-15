@@ -5,6 +5,8 @@ MeCabのカスタム辞書を作成する際に算出が必要となる単語生
 ### コスト計算
 ``` sh
 python3 cost-calculation.py -f ${moto}.csv -o ${cost_calculated}.csv
+
+python3 cost-calculation.py -f ${moto}.csv -o ${cost_calculated}.csv -c 0.5 -d /usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd --skip
 ```
 
 ### 辞書ファイル作成

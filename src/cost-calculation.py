@@ -130,7 +130,7 @@ def normalize_surface(surface):
   return surface_normalized
 
 
-def run(csv_file_path, output_file_path, dict_path, coefficient):
+def run(csv_file_path, output_file_path, dict_path, coefficient, skip):
   rows = []
   with open(csv_file_path) as f:
     # reader = csv.reader(f, delimiter='\t')
@@ -181,10 +181,11 @@ def run(csv_file_path, output_file_path, dict_path, coefficient):
       real_nodes.append(real_node)
       real_node = real_node.next
 
-    if len(real_nodes) == 3:
-      if real_nodes[1].stat == 0:
-        print("{}は既に登録済みです".format(word))
-        continue
+    if skip:
+      if len(real_nodes) == 3:
+        if real_nodes[1].stat == 0:
+          print("{}は既に登録済みです".format(word))
+          continue
     # ----- 不要な対象をチェックし除外する -------
 
     # ----- コスト評価（単体ワードとして分かち書きされる単語生起コスト算出） -------
@@ -211,8 +212,11 @@ def run(csv_file_path, output_file_path, dict_path, coefficient):
     # 単体ワードとして分かち書きされるコストを算出
     # ref. http://blog.livedoor.jp/techblog/archives/65828235.html
     # best_word_cost = (real_acm_cost - partial_connection_cost - 1)
-    best_word_cost = (
-        real_acm_cost - partial_connection_cost - 1) * coefficient
+    best_word_cost = (real_acm_cost - partial_connection_cost - 1)
+    if best_word_cost > 0:
+      best_word_cost = best_word_cost * coefficient
+    else:
+      best_word_cost = best_word_cost * (2 - coefficient)
 
     # ----- コスト評価（単語文字長からの平均コスト取得） -------
     if pos == '名詞':
@@ -272,7 +276,13 @@ if __name__ == "__main__":
       type=float,
       default=0.6
   )
+  parser.add_argument(
+      '-s',
+      '--skip',
+      help='既存単語の再定義をスキップする',
+      action='store_true'
+  )
   args = vars(parser.parse_args())
 
   run(csv_file_path=args['csvFilePath'], output_file_path=args['outputFilePath'],
-      dict_path=args['dictPath'], coefficient=args['coefficient'])
+      dict_path=args['dictPath'], coefficient=args['coefficient'], skip=args['skip'])
